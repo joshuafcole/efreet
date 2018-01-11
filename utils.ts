@@ -1,5 +1,5 @@
 /** Used to avoid extraneous branching where arrays may not exist. */
-export const EMPTY:never[] = [];
+export const EMPTY = [] as never[];
 
 /** Map of common keycodes. */
 export const Keys = {
