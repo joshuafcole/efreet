@@ -41,14 +41,14 @@ export class Dispatcher {
 export let events = new Dispatcher();
 
 export function raise(name:string, args:any[] = []) {
-  return function(event:Event, elem:uElement) {
+  return function(event:Event|object, elem:uElement) {
     let ev_args = args.slice();
     ev_args.push(event, elem);
     events.raise(name, ev_args);
   }
 }
 
-export function trigger(name:string, event:Event, elem:uElement) {
+export function trigger(name:string, event:Event|object, elem:uElement) {
   return events.raise(name, [event, elem]);
 }
 
