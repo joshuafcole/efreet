@@ -49,7 +49,7 @@ export function raise(name:string, args:any[] = []) {
 }
 
 export function trigger(name:string, event:Event, elem:uElement) {
-  return exports.events.raise(name, [event, elem]);
+  return events.raise(name, [event, elem]);
 }
 
 export function stop(event:Event) {
