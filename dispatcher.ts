@@ -59,6 +59,7 @@ export var is_mobile = false; //window.innerHeight < 640 || window.innerWidth < 
 
 export class Dispatcher {
   handlers: {[name:string]: Function[]} = {};
+  eventRaised?: (name:string, args:any[]) => any;
 
   on(name:string, event:string, func:Function) {
     let found = this.handlers[event];
@@ -85,7 +86,7 @@ export class Dispatcher {
       }
       ret = handler.apply(null, args);
     }
-    (window as any).redraw_editor();
+    if(this.eventRaised) this.eventRaised(name, args);
     return ret;
   }
 }
