@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -f *.js",
     "build": "tsc",
+    "postinstall": "postinstall-build dispatcher.js",
     "publish": "npm run clean; npm run build"
   },
   "author": "Joshua Cole",
@@ -14,5 +15,8 @@
   "devDependencies": {
     "@types/node": "^9.3.0",
     "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "postinstall-build": "^5.0.1"
   }
 }
