@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -f *.js",
-    "build": "tsc",
+    "build": "echo '$PWD'; tsc",
     "postinstall": "postinstall-build dispatcher.js",
     "publish": "npm run clean; npm run build"
   },
