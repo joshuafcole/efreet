@@ -48,7 +48,7 @@ export function unpad(template:TemplateStringsArray, ...exprs:any[]) {
     if(ix < minPad) minPad = ix;
   }
   if(minPad < Infinity) {
-    let trimmed = [];
+    let trimmed:string[] = [];
     for(let line of lines) {
       trimmed.push(line.slice(minPad));
     }

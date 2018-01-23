@@ -462,7 +462,7 @@ export class Renderer {
     var as = Object.keys(a);
     var bs = Object.keys(b);
     var updated:any = {};
-    var adds = [];
+    var adds:string[] = [];
     for(var i = 0, len = as.length; i < len; i++) {
       var id = as[i];
       var curA = a[id];
