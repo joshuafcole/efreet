@@ -22,8 +22,8 @@ export interface uElement {
   dirty?:boolean
   semantic?:string
   tween?: jquery.velocity.Options
-  enter?: jquery.velocity.Properties&jquery.velocity.Options&{[key:string]: string|number|boolean}
-  leave?: jquery.velocity.Properties&jquery.velocity.Options&{[key:string]: string|number|boolean}
+  enter?: jquery.velocity.Properties&jquery.velocity.Options&{[key:string]: string|number|boolean|any[]}
+  leave?: jquery.velocity.Properties&jquery.velocity.Options&{[key:string]: string|number|boolean|any[]}
   debug?:any
   focused?:boolean
 
