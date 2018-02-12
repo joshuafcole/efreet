@@ -21,11 +21,11 @@ export interface uElement {
   key?:string
   dirty?:boolean
   semantic?:string
-  tween?: any
-  enter?: any
-  leave?: any
-  debug?:any,
-  focused?:boolean,
+  tween?: jquery.velocity.Options
+  enter?: jquery.velocity.Properties&jquery.velocity.Options
+  leave?: jquery.velocity.Properties&jquery.velocity.Options
+  debug?:any
+  focused?:boolean
 
   // Content
   contentEditable?:boolean
