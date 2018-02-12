@@ -1,6 +1,6 @@
 {
   "name": "efreet",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A lightweight, alternative web framework based around microReact",
   "main": "index.js",
   "scripts": {
