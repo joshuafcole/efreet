@@ -1,4 +1,4 @@
-declare var Velocity:any;
+import * as Velocity from "velocity-animate";
 
 //-----------------------------------------------------
 // MicroReact
@@ -232,7 +232,7 @@ export class Renderer {
           div.style.display = "none";
         }
 
-        Velocity(div, cur.enter, cur.enter);
+        Velocity.animate(div, cur.enter, cur.enter);
 
       }
     }
@@ -265,7 +265,7 @@ export class Renderer {
           if(prev.leave.absolute) {
             me.style.position = "absolute";
           }
-          Velocity(me, prev.leave, prev.leave);
+          Velocity.animate(me, prev.leave, prev.leave);
         }
         else if(me.parentNode) me.parentNode.removeChild(me);
         elementCache[id] = undefined;
@@ -355,7 +355,7 @@ export class Renderer {
 
       let animKeys = Object.keys(tempTween);
       if(animKeys.length) {
-        Velocity(div, tempTween, tween);
+        Velocity.animate(div, tempTween, tween);
         tempTween = {};
       }
 
