@@ -22,8 +22,8 @@ export interface uElement {
   dirty?:boolean
   semantic?:string
   tween?: jquery.velocity.Options
-  enter?: jquery.velocity.Properties&jquery.velocity.Options
-  leave?: jquery.velocity.Properties&jquery.velocity.Options
+  enter?: jquery.velocity.Properties&jquery.velocity.Options&{[key:string]: string|number|boolean}
+  leave?: jquery.velocity.Properties&jquery.velocity.Options&{[key:string]: string|number|boolean}
   debug?:any
   focused?:boolean
 
@@ -153,8 +153,9 @@ function shallowEquals(a:any, b:any) {
   return true;
 }
 
-function postAnimationRemove(elements:Element[]) {
-  for(let elem of elements) {
+function postAnimationRemove(elements:NodeListOf<Element>) {
+  for(let ix = 0; ix < elements.length; ix += 1) {
+    let elem = elements[ix];
     if(elem.parentNode) elem.parentNode.removeChild(elem);
   }
 }
