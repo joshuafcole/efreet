@@ -11,7 +11,96 @@ export interface RenderHandler {
   (node:HTMLElement, elem:uElement): void
 }
 
-export interface uElement {
+export interface uEventHandlers {
+  dblclick?: Handler<MouseEvent>;
+  click?: Handler<MouseEvent>;
+  contextmenu?: Handler<MouseEvent>;
+  mousedown?: Handler<MouseEvent>;
+  mousemove?: Handler<MouseEvent>;
+  mouseup?: Handler<MouseEvent>;
+  mouseover?: Handler<MouseEvent>;
+  mouseout?: Handler<MouseEvent>;
+  mouseenter?: Handler<MouseEvent>;
+  mouseleave?: Handler<MouseEvent>;
+  mousewheel?: Handler<MouseEvent>;
+  dragover?: Handler<MouseEvent>;
+  dragstart?: Handler<MouseEvent>;
+  dragend?: Handler<MouseEvent>;
+  drag?: Handler<MouseEvent>;
+  drop?: Handler<MouseEvent>;
+  scroll?: Handler<MouseEvent>;
+  focus?: Handler<FocusEvent>;
+  blur?: Handler<FocusEvent>;
+  input?: Handler<Event>;
+  change?: Handler<Event>;
+  keyup?: Handler<KeyboardEvent>;
+  keydown?: Handler<KeyboardEvent>;
+  cut?: Handler<KeyboardEvent>;
+  copy?: Handler<KeyboardEvent>;
+  paste?: Handler<KeyboardEvent>;
+  touchstart?: Handler<TouchEvent>;
+  touchend?: Handler<TouchEvent>;
+  touchcancel?: Handler<TouchEvent>;
+  touchmove?: Handler<TouchEvent>;
+  postRender?: RenderHandler;
+}
+
+export interface uSvgParams {
+  svg?:boolean
+  x?:number|string
+  y?:number|string
+  dx?:number|string
+  dy?:number|string
+  cx?:number|string
+  cy?:number|string
+  r?:number|string
+  d?:number|string
+  fill?:string
+  stroke?:string
+  strokeWidth?:string
+  startOffset?:number|string
+  textAnchor?:string
+  viewBox?:string
+  xlinkhref?:string
+}
+
+export interface uStyleParams {
+  // Structure
+  flex?:number|string
+  left?:number|string
+  top?:number|string
+  width?:number|string
+  height?:number|string
+  textAlign?:string
+  transform?:string
+  verticalAlign?:string
+  zIndex?:number
+
+  // Aesthetic
+  backgroundColor?:string
+  backgroundImage?:string
+  border?:string
+  borderColor?:string
+  borderWidth?:number|string
+  borderRadius?:number|string
+  color?:string
+  colspan?:number
+  fontFamily?:string
+  fontSize?:string
+  opacity?:number
+}
+
+export type SAK = Exclude<keyof CSSStyleDeclaration, "length"|"parentRule"|"getPropertyPriority"|"getPropertyValue"|"item"|"removeProperty"|"setProperty">;
+export type StyleAttributes = Pick<CSSStyleDeclaration, SAK>;
+export type VelocityValue<T = string|number|null> = T|[T, T];
+
+export interface uVelocityParams {
+  tween?: jquery.velocity.Options
+  enter?: jquery.velocity.Options&{[P in keyof StyleAttributes]: VelocityValue<StyleAttributes[P]|number>}
+  leave?: jquery.velocity.Options&{[P in keyof StyleAttributes]: VelocityValue<StyleAttributes[P]|number>}
+}
+
+export interface uElement extends uEventHandlers, uSvgParams, uStyleParams, uVelocityParams {
   t?:string
   c?:string
   id?:string
@@ -21,9 +110,6 @@ export interface uElement {
   key?:string
   dirty?:boolean
   semantic?:string
-  tween?: jquery.velocity.Options
-  enter?: jquery.velocity.Properties&jquery.velocity.Options&{[key:string]: string|number|boolean|any[]}
-  leave?: jquery.velocity.Properties&jquery.velocity.Options&{[key:string]: string|number|boolean|any[]}
   debug?:any
   focused?:boolean
 
@@ -51,85 +137,7 @@ export interface uElement {
   dangerouslySetInnerHTML?:string
   target?:string|number
 
-  style?: string,
-
-  // Styles (Structure)
-  flex?:number|string
-  left?:number|string
-  top?:number|string
-  width?:number|string
-  height?:number|string
-  textAlign?:string
-  transform?:string
-  verticalAlign?:string
-  zIndex?:number
-
-  // Styles (Aesthetic)
-  backgroundColor?:string
-  backgroundImage?:string
-  border?:string
-  borderColor?:string
-  borderWidth?:number|string
-  borderRadius?:number|string
-  color?:string
-  colspan?:number
-  fontFamily?:string
-  fontSize?:string
-
-  opacity?:number
-
-  // Svg
-  svg?:boolean
-  x?:number|string
-  y?:number|string
-  dx?:number|string
-  dy?:number|string
-  cx?:number|string
-  cy?:number|string
-  r?:number|string
-  d?:number|string
-  fill?:string
-  stroke?:string
-  strokeWidth?:string
-  startOffset?:number|string
-  textAnchor?:string
-  viewBox?:string
-  xlinkhref?:string
-
-  // Events
-  dblclick?:Handler<MouseEvent>
-  click?:Handler<MouseEvent>
-  contextmenu?:Handler<MouseEvent>
-  mousedown?:Handler<MouseEvent>
-  mousemove?:Handler<MouseEvent>
-  mouseup?:Handler<MouseEvent>
-  mouseover?:Handler<MouseEvent>
-  mouseout?:Handler<MouseEvent>
-  mouseenter?:Handler<MouseEvent>
-  mouseleave?:Handler<MouseEvent>
-  mousewheel?:Handler<MouseEvent>
-  dragover?:Handler<MouseEvent>
-  dragstart?:Handler<MouseEvent>
-  dragend?:Handler<MouseEvent>
-  drag?:Handler<MouseEvent>
-  drop?:Handler<MouseEvent>
-  scroll?:Handler<MouseEvent>
-  focus?:Handler<FocusEvent>
-  blur?:Handler<FocusEvent>
-  input?:Handler<Event>
-  change?:Handler<Event>
-  keyup?:Handler<KeyboardEvent>
-  keydown?:Handler<KeyboardEvent>
-  cut?:Handler<KeyboardEvent>
-  copy?:Handler<KeyboardEvent>
-  paste?:Handler<KeyboardEvent>
-
-  touchstart?:Handler<TouchEvent>
-  touchend?:Handler<TouchEvent>
-  touchcancel?:Handler<TouchEvent>
-  touchmove?:Handler<TouchEvent>
-
-  postRender?:RenderHandler
+  style?: string
 
   [attr:string]: any
 }
@@ -263,9 +271,6 @@ export class Renderer {
         let me = elementCache[id]!
         if(prev.leave) {
           prev.leave.complete = postAnimationRemove;
-          if(prev.leave.absolute) {
-            me.style.position = "absolute";
-          }
           Velocity.animate(me, prev.leave, prev.leave);
         }
         else if(me.parentNode) me.parentNode.removeChild(me);
