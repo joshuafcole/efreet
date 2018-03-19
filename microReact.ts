@@ -131,6 +131,7 @@ export interface uElement extends uEventHandlers, uSvgParams, uStyleParams, uVel
   type?:string
   value?:string|boolean|number
   for?:string
+  name?:string
 
   dangerouslySetInnerHTML?:string
   target?:string|number
@@ -310,6 +311,7 @@ export class Renderer {
       if(cur.download !== prev.download) div.setAttribute("download", cur.download);
       if(cur.allowfullscreen !== prev.allowfullscreen) div.setAttribute("allowfullscreen", cur.allowfullscreen);
       if(cur.for !== prev.for) div.setAttribute("for", cur.for);
+      if(cur.name !== prev.name) div.setAttribute("name", cur.name);
       if(cur.htmlID !== prev.htmlID) div.setAttribute("id", cur.htmlID);
 
       // animateable properties
@@ -534,6 +536,7 @@ export class Renderer {
           && curA.transform === curB.transform
           && curA.verticalAlign === curB.verticalAlign
           && curA.for === curB.for
+          && curA.name === curB.name
           && curA.htmlID === curB.htmlID
           && curA.style === curB.style
           && (curB.svg === undefined || (
