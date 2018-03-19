@@ -129,7 +129,7 @@ export interface uElement extends uEventHandlers, uSvgParams, uStyleParams, uVel
   text?:string
   strictText?: boolean
   type?:string
-  value?:string
+  value?:string|boolean|number
   for?:string
 
   dangerouslySetInnerHTML?:string
