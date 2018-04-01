@@ -96,8 +96,8 @@ export type VelocityValue<T = string|number|null> = T|[T, T];
 
 export interface uVelocityParams {
   tween?: jquery.velocity.Options
-  enter?: jquery.velocity.Options&{[P in keyof StyleAttributes]: VelocityValue<StyleAttributes[P]|number>}
-  leave?: jquery.velocity.Options&{[P in keyof StyleAttributes]: VelocityValue<StyleAttributes[P]|number>}
+  enter?: jquery.velocity.Options&{[P in keyof StyleAttributes]?: VelocityValue<StyleAttributes[P]|number>}
+  leave?: jquery.velocity.Options&{[P in keyof StyleAttributes]?: VelocityValue<StyleAttributes[P]|number>}
 }
 
 export interface uElement extends uEventHandlers, uSvgParams, uStyleParams, uVelocityParams {
