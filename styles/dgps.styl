@@ -1,0 +1,29 @@
+.dgps-wrapper
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+
+.dgps-element, .dgps-transient, .dgps-modal
+  position: absolute;
+  pointer-events: auto;
+  z-index: 110;
+
+.dgps-transient
+  opacity: 0;
+
+.dgps-modal-shade
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  padding: 160px;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  animation: 0.25s 1 fade-to-black;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
+
+@keyframes fade-to-black
+  from
+    background: rgba(0, 0, 0, 0);
+  to
+    background: rgba(0, 0, 0, 0.25);
