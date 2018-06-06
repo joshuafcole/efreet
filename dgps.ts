@@ -1,7 +1,7 @@
 import {uElement} from "./microReact";
 import {events, raise, trigger} from "./dispatcher";
 
-import "../../styles/dgps.styl";
+import "./styles/dgps.styl";
 
 export interface DGPSElement {
   id: string;
