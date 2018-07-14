@@ -1,5 +1,3 @@
-import * as Velocity from "velocity-animate";
-
 //-----------------------------------------------------
 // MicroReact
 //-----------------------------------------------------
@@ -92,15 +90,8 @@ export interface uStyleParams {
 
 export type SAK = Exclude<keyof CSSStyleDeclaration, "length"|"parentRule"|"getPropertyPriority"|"getPropertyValue"|"item"|"removeProperty"|"setProperty">;
 export type StyleAttributes = Pick<CSSStyleDeclaration, SAK>;
-export type VelocityValue<T = string|number|null> = T|[T, T];
 
-export interface uVelocityParams {
-  tween?: jquery.velocity.Options
-  enter?: jquery.velocity.Options&{[P in keyof StyleAttributes]?: VelocityValue<StyleAttributes[P]|number>}
-  leave?: jquery.velocity.Options&{[P in keyof StyleAttributes]?: VelocityValue<StyleAttributes[P]|number>}
-}
-
-export interface uElement extends uEventHandlers, uSvgParams, uStyleParams, uVelocityParams {
+export interface uElement extends uEventHandlers, uSvgParams, uStyleParams {
   t?:string
   c?:string
   id?:string
@@ -234,15 +225,6 @@ export class Renderer {
       }
       div._id = id;
       elementCache[id] = div;
-      if(cur.enter) {
-        if(cur.enter.delay) {
-          cur.enter.display = "auto";
-          div.style.display = "none";
-        }
-
-        Velocity.animate(div, cur.enter, cur.enter);
-
-      }
     }
 
     for(var i = 0, len = elemKeys.length; i < len; i++) {
@@ -270,7 +252,6 @@ export class Renderer {
         let me = elementCache[id]!
         if(prev.leave) {
           prev.leave.complete = postAnimationRemove;
-          Velocity.animate(me, prev.leave, prev.leave);
         }
         else if(me.parentNode) me.parentNode.removeChild(me);
         elementCache[id] = undefined;
@@ -315,64 +296,44 @@ export class Renderer {
       if(cur.htmlID !== prev.htmlID) div.setAttribute("id", cur.htmlID);
 
       // animateable properties
-      var tween = cur.tween || tempTween;
       if(cur.flex !== prev.flex) {
-        if(tween.flex) tempTween.flex = cur.flex;
-        else style.flex = cur.flex === undefined ? "" : cur.flex;
+        style.flex = cur.flex === undefined ? "" : cur.flex;
       }
       if(cur.left !== prev.left) {
-          if(tween.left) tempTween.left = cur.left;
-        else style.left = cur.left === undefined ? "" : (typeof cur.left == "number" ? cur.left + "px" : cur.left);
+        style.left = cur.left === undefined ? "" : (typeof cur.left == "number" ? cur.left + "px" : cur.left);
       }
       if(cur.top !== prev.top) {
-        if(tween.top) tempTween.top = cur.top;
-        else style.top = cur.top === undefined ? "" : (typeof cur.top == "number" ? cur.top + "px" : cur.top);
+        style.top = cur.top === undefined ? "" : (typeof cur.top == "number" ? cur.top + "px" : cur.top);
       }
       if(cur.height !== prev.height) {
-        if(tween.height) tempTween.height = cur.height;
-        else style.height = cur.height === undefined ? "auto" : (typeof cur.height == "number" ? cur.height + "px" : cur.height);
+        style.height = cur.height === undefined ? "auto" : (typeof cur.height == "number" ? cur.height + "px" : cur.height);
       }
       if(cur.width !== prev.width) {
-        if(tween.width) tempTween.width = cur.width;
-        else style.width = cur.width === undefined ? "auto" : (typeof cur.width == "number" ? cur.width + "px" : cur.width);
+        style.width = cur.width === undefined ? "auto" : (typeof cur.width == "number" ? cur.width + "px" : cur.width);
       }
       if(cur.zIndex !== prev.zIndex) {
-        if(tween.zIndex) tempTween.zIndex = cur.zIndex;
-        else style.zIndex = cur.zIndex;
+        style.zIndex = cur.zIndex;
       }
       if(cur.backgroundColor !== prev.backgroundColor) {
-        if(tween.backgroundColor) tempTween.backgroundColor = cur.backgroundColor;
-        else style.backgroundColor = cur.backgroundColor || "transparent";
+        style.backgroundColor = cur.backgroundColor || "transparent";
       }
       if(cur.borderColor !== prev.borderColor) {
-        if(tween.borderColor) tempTween.borderColor = cur.borderColor;
-        else style.borderColor = cur.borderColor || "none";
+        style.borderColor = cur.borderColor || "none";
       }
       if(cur.borderWidth !== prev.borderWidth) {
-        if(tween.borderWidth) tempTween.borderWidth = cur.borderWidth;
-        else style.borderWidth = cur.borderWidth || 0;
+        style.borderWidth = cur.borderWidth || 0;
       }
       if(cur.borderRadius !== prev.borderRadius) {
-        if(tween.borderRadius) tempTween.borderRadius = cur.borderRadius;
-        else style.borderRadius = (cur.borderRadius || 0) + "px";
+        style.borderRadius = (cur.borderRadius || 0) + "px";
       }
       if(cur.opacity !== prev.opacity) {
-        if(tween.opacity) tempTween.opacity = cur.opacity;
-        else style.opacity = cur.opacity === undefined ? 1 : cur.opacity;
+        style.opacity = cur.opacity === undefined ? 1 : cur.opacity;
       }
       if(cur.fontSize !== prev.fontSize) {
-        if(tween.fontSize) tempTween.fontSize = cur.fontSize;
-        else style.fontSize = cur.fontSize;
+        style.fontSize = cur.fontSize;
       }
       if(cur.color !== prev.color) {
-        if(tween.color) tempTween.color = cur.color;
-        else style.color = cur.color || "inherit";
-      }
-
-      let animKeys = Object.keys(tempTween);
-      if(animKeys.length) {
-        Velocity.animate(div, tempTween, tween);
-        tempTween = {};
+        style.color = cur.color || "inherit";
       }
 
       // non-animation style properties
