@@ -272,9 +272,9 @@ export class Renderer {
       if(cur.colspan !== prev.colspan) div.colSpan = cur.colspan;
       if(cur.placeholder !== prev.placeholder) div.setAttribute("placeholder", cur.placeholder);
       if(cur.selected !== prev.selected) div.selected = cur.selected;
-      if(cur.min !== prev.min && div.min !== cur.min) div.min = cur.min === undefined ? "" : cur.min;
-      if(cur.max !== prev.max && div.max !== cur.max) div.max = cur.max === undefined ? "" : cur.max;
-      if(cur.step !== prev.step && div.step !== cur.step) div.step = cur.step === undefined ? "" : cur.step;
+      if(cur.min !== prev.min) div.min = cur.min === undefined ? 0 : cur.min;
+      if(cur.max !== prev.max) div.max = cur.max === undefined ? 100 : cur.max;
+      if(cur.step !== prev.step) div.step = cur.step === undefined ? 1 : cur.step;
       if((cur.value !== prev.value || cur.strictText) && div.value !== cur.value) div.value = cur.value === undefined ? "" : cur.value;
       if(cur.t === "input" && cur.type !== prev.type) div.type = cur.type;
       if(cur.t === "input" && cur.checked !== prev.checked) div.checked = cur.checked;
