@@ -263,6 +263,7 @@ export class Renderer {
         continue;
       } else {
         div = elementCache[id];
+        div._elem = cur;
       }
 
       var style = div.style;
