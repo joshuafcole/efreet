@@ -227,6 +227,7 @@ export class Renderer {
         div = document.createElement(cur.t || "div");
       }
       div._id = id;
+      div._elem = cur;
       elementCache[id] = div;
     }
 
@@ -246,6 +247,7 @@ export class Renderer {
         }
         prev = fakePrev;
         div._id = id;
+        div._elem = cur;
         elementCache[id] = div;
       } else if (type === "removed") {
         //NOTE: Batching the removes such that you only remove the parent
