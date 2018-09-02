@@ -434,7 +434,18 @@ export class Renderer {
         }
       }
 
-      if(cur.focused) div.focus();
+      if(cur.focused) {
+        div.focus();
+        if (typeof window.getSelection != "undefined"
+            && typeof document.createRange != "undefined") {
+          let range = document.createRange();
+          range.selectNodeContents(div);
+          range.collapse(false);
+          let sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
     }
   }
 
