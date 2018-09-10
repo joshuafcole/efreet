@@ -435,16 +435,19 @@ export class Renderer {
       }
 
       if(cur.focused) {
-        div.focus();
-        if (typeof window.getSelection != "undefined"
-            && typeof document.createRange != "undefined") {
-          let range = document.createRange();
-          range.selectNodeContents(div);
-          range.collapse(false);
-          let sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
-        }
+        // This doesn't consistently work on newly parented nodes unless we delay it. :(
+        setTimeout(() => {
+          div.focus();
+          if (typeof window.getSelection != "undefined"
+              && typeof document.createRange != "undefined") {
+            let range = document.createRange();
+            range.selectNodeContents(div);
+            range.collapse(false);
+            let sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+        }, 0);
       }
     }
   }
