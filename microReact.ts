@@ -401,7 +401,7 @@ export class Renderer {
       if(cur.mouseout !== prev.mouseout) div.onmouseout = cur.mouseout !== undefined ? this.handleEvent : undefined;
       if(cur.mouseenter !== prev.mouseenter) div.onmouseenter = cur.mouseenter !== undefined ? this.handleEvent : undefined;
       if(cur.mouseleave !== prev.mouseleave) div.onmouseleave = cur.mouseleave !== undefined ? this.handleEvent : undefined;
-      if(cur.mousewheel !== prev.mousewheel) div.onmouseheel = cur.mousewheel !== undefined ? this.handleEvent : undefined;
+      if(cur.mousewheel !== prev.mousewheel) div.onmousewheel = cur.mousewheel !== undefined ? this.handleEvent : undefined;
       if(cur.dragover !== prev.dragover) div.ondragover = cur.dragover !== undefined ? this.handleEvent : undefined;
       if(cur.dragstart !== prev.dragstart) div.ondragstart = cur.dragstart !== undefined ? this.handleEvent : undefined;
       if(cur.dragend !== prev.dragend) div.ondragend = cur.dragend !== undefined ? this.handleEvent : undefined;
