@@ -111,7 +111,7 @@ export interface uElement extends uEventHandlers, uSvgParams, uStyleParams {
   title?:string
   href?:string
   src?:string
-  data?:{[key:string]:number|string|boolean}
+  data?:string
   download?:string
   allowfullscreen?:boolean
   placeholder?:string
@@ -287,17 +287,7 @@ export class Renderer {
       if(cur.href !== prev.href) div.setAttribute("href", cur.href);
       if(cur.src !== prev.src) div.setAttribute("src", cur.src);
       if(cur.target !== prev.target) div.setAttribute("target", cur.target);
-      if(!shallowEquals(cur.data, prev.data)) {
-        if(prev.data) {
-          for(let key in prev.data) {
-            if(cur.data && cur.data[key]) continue;
-            div.removeAttribute(`data-${key}`);
-          }
-        }
-        if(cur.data) {
-          for(let key in cur.data) div.setAttribute(`data-${key}`, cur.data[key]);
-        }
-      }
+      if(cur.data !== prev.data) div.setAttribute("data", cur.data);
       if(cur.download !== prev.download) div.setAttribute("download", cur.download);
       if(cur.allowfullscreen !== prev.allowfullscreen) div.setAttribute("allowfullscreen", cur.allowfullscreen);
       if(cur.for !== prev.for) div.setAttribute("for", cur.for);
@@ -481,7 +471,7 @@ export class Renderer {
           && curA.title === curB.title
           && curA.href === curB.href
           && curA.src === curB.src
-          && shallowEquals(curA.data, curB.data)
+          && curA.data === curB.data
           && curA.download === curB.download
           && curA.allowfullscreen === curB.allowfullscreen
           && curA.placeholder === curB.placeholder
