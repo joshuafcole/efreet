@@ -529,7 +529,9 @@ export class Renderer {
               && curA.textAnchor === curB.textAnchor
               && curA.viewBox === curB.viewBox
               && curA.xlinkhref === curB.xlinkhref))
-              ) {
+        ) {
+        let div = this.elementCache[id];
+        if(div) (div as any)._elem = curB;
         continue;
       }
       updated[id] = "updated";
